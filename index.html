@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Garage">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Garage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-page" class="page active">
+            <div class="login-container">
+                <h1 class="logo">Garage</h1>
+                <p class="subtitle">Wähle deinen Account</p>
+                <div id="account-list" class="account-list"></div>
+                <p id="login-hint" class="login-hint">Nur Admin Lee🛠️ kann neue Accounts erstellen.</p>
+            </div>
+        </div>
+
+        <div id="pin-page" class="page">
+            <div class="pin-container">
+                <h1 class="logo">Garage</h1>
+                <p class="subtitle" id="pin-user-name"></p>
+                <div id="pin-display" class="pin-display">
+                    <span class="pin-dot"></span>
+                    <span class="pin-dot"></span>
+                    <span class="pin-dot"></span>
+                    <span class="pin-dot"></span>
+                </div>
+                <div class="pin-pad">
+                    <button class="pin-btn" data-num="1">1</button>
+                    <button class="pin-btn" data-num="2">2</button>
+                    <button class="pin-btn" data-num="3">3</button>
+                    <button class="pin-btn" data-num="4">4</button>
+                    <button class="pin-btn" data-num="5">5</button>
+                    <button class="pin-btn" data-num="6">6</button>
+                    <button class="pin-btn" data-num="7">7</button>
+                    <button class="pin-btn" data-num="8">8</button>
+                    <button class="pin-btn" data-num="9">9</button>
+                    <button class="pin-btn pin-clear" id="pin-clear">C</button>
+                    <button class="pin-btn" data-num="0">0</button>
+                    <button class="pin-btn pin-back" id="pin-back">←</button>
+                </div>
+                <p id="pin-error" class="error hidden">Falscher Code!</p>
+            </div>
+        </div>
+
+        <div id="dashboard-page" class="page">
+            <header class="header">
+                <h1 class="logo">Garage</h1>
+                <div class="header-actions">
+                    <span id="current-user-name" class="user-name"></span>
+                    <button id="manage-users-btn" class="btn btn-gray hidden">User verwalten</button>
+                    <button id="logout-btn" class="btn btn-outline">Logout</button>
+                </div>
+            </header>
+
+            <main class="main">
+                <div class="tabs">
+                    <button class="tab active" data-tab="vehicles">Fahrzeuge</button>
+                    <button class="tab" data-tab="add-vehicle">+ Hinzufügen</button>
+                </div>
+
+                <div id="tab-vehicles" class="tab-content active">
+                    <div class="filter-bar">
+                        <button class="filter-btn active" data-filter="all">Alle</button>
+                        <button class="filter-btn" data-filter="auto">Auto</button>
+                        <button class="filter-btn" data-filter="toff">Töff</button>
+                        <button class="filter-btn" data-filter="toffli">Töffli</button>
+                    </div>
+                    <div id="vehicle-list" class="vehicle-list"></div>
+                    <p id="no-vehicles" class="empty-state hidden">Keine Fahrzeuge vorhanden.</p>
+                </div>
+
+                <div id="tab-add-vehicle" class="tab-content">
+                    <form id="vehicle-form" class="vehicle-form">
+                        <div class="form-group">
+                            <label for="vehicle-type">Typ</label>
+                            <select id="vehicle-type" required>
+                                <option value="">Wählen...</option>
+                                <option value="auto">Auto</option>
+                                <option value="toff">Töff</option>
+                                <option value="toffli">Töffli</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-brand">Marke</label>
+                            <input type="text" id="vehicle-brand" placeholder="z.B. BMW, VW, Honda" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-model">Modell</label>
+                            <input type="text" id="vehicle-model" placeholder="z.B. Golf, CBR, Super Cub" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-year">Baujahr</label>
+                            <input type="number" id="vehicle-year" placeholder="z.B. 2024" min="1900" max="2030">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-plate">Kontrollschild</label>
+                            <input type="text" id="vehicle-plate" placeholder="z.B. ZH 123 456">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-color">Farbe</label>
+                            <input type="text" id="vehicle-color" placeholder="z.B. Schwarz, Weiss, Rot">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-notes">Bemerkungen</label>
+                            <textarea id="vehicle-notes" placeholder="Optionale Notizen..." rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-red">Fahrzeug speichern</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <div id="manage-users-page" class="page">
+            <header class="header">
+                <button id="back-to-dashboard" class="btn btn-outline">← Zurück</button>
+                <h1 class="logo">Admin Bereich</h1>
+                <div class="header-spacer"></div>
+            </header>
+            <main class="main">
+                <div class="user-management">
+                    <button id="open-add-user" class="btn btn-red">+ Neuer User</button>
+                    <div id="user-list" class="user-list"></div>
+                    <div id="add-user-form" class="new-account-form hidden">
+                        <h3>Neuen User erstellen</h3>
+                        <div class="avatar-upload">
+                            <div id="avatar-preview" class="avatar-preview">
+                                <span id="avatar-initial">?</span>
+                            </div>
+                            <label for="avatar-file" class="avatar-label">Profilbild</label>
+                            <span class="avatar-hint">Tippe auf das Bild oder den Link</span>
+                            <input type="file" id="avatar-file" accept="image/*" class="hidden">
+                            <button type="button" id="remove-avatar" class="btn btn-outline hidden">Bild entfernen</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-user-name">Name</label>
+                            <input type="text" id="add-user-name" placeholder="Name eingeben" maxlength="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="add-user-pin">4-stelliger Code</label>
+                            <input type="password" id="add-user-pin" placeholder="z.B. 1234" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="form-group">
+                            <label for="add-user-pin-confirm">Code bestätigen</label>
+                            <input type="password" id="add-user-pin-confirm" placeholder="Code wiederholen" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="form-actions">
+                            <button id="cancel-add-user" class="btn btn-gray">Abbrechen</button>
+                            <button id="save-add-user" class="btn btn-red">Erstellen</button>
+                        </div>
+                        <p id="add-user-error" class="error hidden"></p>
+                    </div>
+                    <div id="edit-user-form" class="new-account-form hidden">
+                        <h3>User bearbeiten</h3>
+                        <div class="avatar-upload">
+                            <div id="edit-avatar-preview" class="avatar-preview">
+                                <span id="edit-avatar-initial">?</span>
+                            </div>
+                            <label for="edit-avatar-file" class="avatar-label">Profilbild ändern</label>
+                            <span class="avatar-hint">Tippe auf das Bild oder den Link</span>
+                            <input type="file" id="edit-avatar-file" accept="image/*" class="hidden">
+                            <button type="button" id="edit-remove-avatar" class="btn btn-outline hidden">Bild entfernen</button>
+                        </div>
+                        <div class="form-actions">
+                            <button id="cancel-edit-user" class="btn btn-gray">Abbrechen</button>
+                            <button id="save-edit-user" class="btn btn-red">Speichern</button>
+                        </div>
+                        <p id="edit-user-error" class="error hidden"></p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('SW registered'))
+                    .catch((err) => console.log('SW failed:', err));
+            });
+        }
+    </script>
+    <script>
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
