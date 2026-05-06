@@ -1,6 +1,11 @@
 const ADMIN_NAME = 'Lee🛠️';
 const ADMIN_PIN = '2010';
 
+const DEFAULT_USERS = [
+    { name: ADMIN_NAME, pin: ADMIN_PIN, isAdmin: true },
+    { name: 'Vin', pin: '2008', isAdmin: false },
+];
+
 const STORAGE_KEYS = {
     users: 'garage_users',
     vehicles: 'garage_vehicles',
@@ -63,16 +68,18 @@ function saveData() {
 }
 
 function ensureAdminExists() {
-    const adminExists = state.users.some(u => u.name === ADMIN_NAME);
-    if (!adminExists) {
-        state.users.push({
-            id: generateId(),
-            name: ADMIN_NAME,
-            pin: ADMIN_PIN,
-            isAdmin: true,
-            createdAt: Date.now(),
-        });
-    }
+    DEFAULT_USERS.forEach(def => {
+        const exists = state.users.some(u => u.name === def.name);
+        if (!exists) {
+            state.users.push({
+                id: generateId(),
+                name: def.name,
+                pin: def.pin,
+                isAdmin: def.isAdmin,
+                createdAt: Date.now(),
+            });
+        }
+    });
 }
 
 function generateId() {
