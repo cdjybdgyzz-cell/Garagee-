@@ -19,6 +19,12 @@ let state = {
     editPendingAvatar: null,
 };
 
+function lockPortrait() {
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('portrait').catch(() => {});
+    }
+}
+
 function init() {
     loadData();
     ensureAdminExists();
@@ -26,6 +32,7 @@ function init() {
     showPage('login-page');
     renderAccounts();
     setupEventListeners();
+    lockPortrait();
 }
 
 function loadData() {

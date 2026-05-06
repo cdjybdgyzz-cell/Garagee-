@@ -839,21 +839,78 @@ body {
 
 /* Landscape optimization */
 @media (orientation: landscape) and (max-height: 500px) {
-    .pin-container {
-        padding: 10px 0;
+    .rotate-warning {
+        display: flex;
     }
 
-    .pin-display {
-        margin-bottom: 1rem;
+    #app {
+        display: none !important;
+    }
+}
+
+/* Portrait-only mode for mobile */
+@media (max-width: 600px) {
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
-    .pin-btn {
-        width: 56px;
-        height: 56px;
-        font-size: 1.25rem;
+    body {
+        display: flex;
+        justify-content: center;
     }
 
-    .logo {
-        font-size: 2rem;
+    .page {
+        max-width: 430px;
+        margin: 0 auto;
     }
+
+    .header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .main {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* Rotate warning overlay */
+.rotate-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--black);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+}
+
+.rotate-icon {
+    font-size: 4rem;
+    animation: rotate-phone 2s ease-in-out infinite;
+}
+
+@keyframes rotate-phone {
+    0%, 100% { transform: rotate(-90deg); }
+    50% { transform: rotate(0deg); }
+}
+
+.rotate-warning p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--white);
+    line-height: 1.5;
+}
+
+.rotate-warning strong {
+    color: var(--red);
 }
